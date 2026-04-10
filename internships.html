@@ -1,0 +1,167 @@
+<!-- internships.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Internship opportunities and career resources for SPU students and graduates" />
+  <title>Internships – Campus Connect</title>
+  <link rel="stylesheet" href="shared.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+  <style>
+    body { background: #f9f9f9; }
+
+    .stats-strip { display: flex; gap: 1px; background: #e0e0e0; border-radius: var(--radius); overflow: hidden; margin-bottom: 2.5rem; }
+    .stat-cell { background: white; flex: 1; padding: 1.5rem; text-align: center; }
+    .stat-val { font-family: var(--font-head); font-size: 1.8rem; font-weight: 800; color: #0A1C3A; }
+    .stat-lbl { font-size: 0.75rem; color: #6c757d; margin-top: 0.25rem; }
+
+    .filter-row { display: flex; gap: 0.75rem; flex-wrap: wrap; margin-bottom: 1.5rem; }
+    .filter-chip { 
+      background: white; 
+      border: 2px solid #e0e0e0; 
+      border-radius: 999px; 
+      padding: 0.5rem 1.25rem; 
+      font-size: 0.85rem; 
+      font-weight: 700; 
+      color: #6c757d; 
+      cursor: pointer; 
+      transition: all 0.2s ease; 
+      display: inline-flex; 
+      align-items: center; 
+      gap: 0.5rem;
+    }
+    .filter-chip i { 
+      font-size: 0.85rem; 
+      color: #E67E22;
+    }
+    /* Hover and Active state - Dark Blue like header (#0A1C3A) */
+    .filter-chip:hover, .filter-chip.active { 
+      background: #0A1C3A;
+      border-color: #0A1C3A;
+      color: #fff; 
+    }
+    .filter-chip:hover i, .filter-chip.active i { 
+      color: #fff;
+    }
+
+    .boards-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 1.25rem; }
+    .board-card { background: white; border: 1px solid #e0e0e0; border-radius: var(--radius); padding: 1.5rem; text-align: center; text-decoration: none; color: #333; transition: all 0.3s ease; display: block; }
+    .board-card:hover { transform: translateY(-6px); box-shadow: var(--shadow); border-color: #E67E22; }
+    .board-icon { font-size: 2.5rem; margin-bottom: 0.75rem; }
+    .board-icon i { font-size: 2.5rem; }
+    .board-card:hover .fa-linkedin { color: #0077B5; }
+    .board-card:hover .fa-indeed { color: #2164F3; }
+    .board-card:hover .fa-search { color: #E67E22; }
+    .board-card:hover .fa-briefcase { color: #0A1C3A; }
+    .board-name { font-family: var(--font-head); font-weight: 800; font-size: 1rem; color: #0A1C3A; margin-bottom: 0.25rem; }
+    .board-desc { font-size: 0.78rem; color: #6c757d; margin-bottom: 1rem; }
+    .board-keyword { font-size: 0.72rem; background: #f0f0f0; color: #555; padding: 0.25rem 0.65rem; border-radius: 999px; display: inline-block; }
+  </style>
+</head>
+<body>
+
+<nav class="top-nav">
+  <div class="nav-logo"><div class="logo-icon">CC</div>Campus Connect</div>
+  <ul class="nav-links" id="navLinks">
+    <li><a href="index.html">Home</a></li>
+    <li><a href="accommodation.html">Stay</a></li>
+    <li><a href="tutoring.html">Study</a></li>
+    <li><a href="internships.html" class="active">Careers</a></li>
+    <li><a href="find-us.html">Find Us</a></li>
+  </ul>
+  <button class="hamburger" id="ham"><span></span><span></span><span></span></button>
+</nav>
+
+<div class="page-header">
+  <div style="padding: calc(var(--nav-h) + 2.5rem) clamp(1.25rem,5vw,4rem) 0; max-width:1200px; margin:0 auto;">
+    <div class="page-label">Career Development</div>
+    <h1>Internships</h1>
+    <p>Find internship opportunities, build your professional network, and launch your career with top employers.</p>
+  </div>
+</div>
+
+<div class="section">
+
+  <div class="stats-strip">
+    <div class="stat-cell"><div class="stat-val"><span>Select A Faculty Field To Automatically Search For Jobs Using The No 1 Trusted Sites For Free</span></div><div class="stat-lbl">SA Jobs Listed Daily</div></div>
+  </div>
+
+  <div class="filter-row">
+    <span style="font-size:0.8rem;font-weight:700;color:#6c757d;align-self:center;">SPU Faculty:</span>
+    <button class="filter-chip active" onclick="setKeyword('internship South Africa',this)"><i class="fas fa-layer-group"></i> All</button>
+    <button class="filter-chip" onclick="setKeyword('software developer internship South Africa',this)"><i class="fas fa-laptop-code"></i> ICT & Software</button>
+    <button class="filter-chip" onclick="setKeyword('accounting finance internship South Africa',this)"><i class="fas fa-file-invoice-dollar"></i> Accounting & Finance</button>
+    <button class="filter-chip" onclick="setKeyword('data science analytics internship South Africa',this)"><i class="fas fa-chart-line"></i> Data Science</button>
+    <button class="filter-chip" onclick="setKeyword('teaching education internship South Africa',this)"><i class="fas fa-chalkboard-user"></i> Education</button>
+    <button class="filter-chip" onclick="setKeyword('environmental ecology internship South Africa',this)"><i class="fas fa-leaf"></i> Environmental</button>
+    <button class="filter-chip" onclick="setKeyword('business management internship South Africa',this)"><i class="fas fa-briefcase"></i> Business</button>
+    <button class="filter-chip" onclick="setKeyword('agriculture internship South Africa',this)"><i class="fas fa-tractor"></i> Agriculture</button>
+    <button class="filter-chip" onclick="setKeyword('remote internship South Africa',this)"><i class="fas fa-globe"></i> Remote</button>
+    <button class="filter-chip" onclick="setKeyword('Kimberley Northern Cape internship',this)"><i class="fas fa-map-marker-alt"></i> Kimberley</button>
+  </div>
+
+  <h2 class="section-title">Live Job Boards</h2>
+  <p style="font-size:0.88rem;color:#6c757d;margin-bottom:1.5rem;">
+    Click a field above then click any board below — opens a live search on that platform instantly.
+  </p>
+  <div class="boards-grid" id="boardsGrid"></div>
+
+</div>
+
+<script>
+  document.getElementById('ham').addEventListener('click', () => {
+    document.getElementById('navLinks').classList.toggle('open');
+  });
+
+  let currentKeyword = 'internship South Africa';
+
+  const BOARDS = [
+    {
+      icon: '<i class="fab fa-linkedin"></i>',
+      name: 'LinkedIn Jobs',
+      desc: 'Network and apply in one place',
+      url: q => `https://www.linkedin.com/jobs/search/?keywords=${encodeURIComponent(q)}&location=South%20Africa`
+    },
+    {
+      icon: '<i class="fas fa-search" style="color:#E67E22;"></i>',
+      name: 'Indeed SA',
+      desc: 'Millions of live SA listings',
+      url: q => `https://za.indeed.com/jobs?q=${encodeURIComponent(q)}&l=South+Africa`
+    },
+    {
+      icon: '<i class="fas fa-briefcase"></i>',
+      name: 'Careers24',
+      desc: "South Africa's biggest job portal",
+      url: q => `https://www.careers24.com/jobs/in-south-africa/?keywords=${encodeURIComponent(q)}`
+    },
+    {
+      icon: '<i class="fas fa-chart-simple"></i>',
+      name: 'PNet',
+      desc: 'Professional SA career roles',
+      url: q => `https://www.pnet.co.za/jobs/${encodeURIComponent(q.replace(/ /g,'-'))}/`
+    }
+  ];
+
+  function renderBoards() {
+    document.getElementById('boardsGrid').innerHTML = BOARDS.map((b, i) => `
+      <a href="${b.url(currentKeyword)}" target="_blank" rel="noopener" class="board-card fade-up d${(i%6)+1}">
+        <div class="board-icon">${b.icon}</div>
+        <div class="board-name">${b.name}</div>
+        <div class="board-desc">${b.desc}</div>
+        <div class="board-keyword">🔎 "${currentKeyword}"</div>
+      </a>
+    `).join('');
+  }
+
+  function setKeyword(kw, btn) {
+    document.querySelectorAll('.filter-chip').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    currentKeyword = kw;
+    renderBoards();
+  }
+
+  document.addEventListener('DOMContentLoaded', renderBoards);
+</script>
+</body>
+</html>

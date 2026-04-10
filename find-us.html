@@ -1,0 +1,472 @@
+<!-- find-us.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Find Campus Connect - Contact information, location, and office hours" />
+  <title>Find Us – Campus Connect</title>
+  <link rel="stylesheet" href="shared.css" />
+  <style>
+    body { background: #f9f9f9; }
+    
+    .contact-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2rem;
+      margin-bottom: 3rem;
+    }
+    
+    .contact-info-card {
+      background: white;
+      border-radius: var(--radius);
+      padding: 2rem;
+      border: 1px solid #e0e0e0;
+    }
+    
+    .contact-info-card h3 {
+      font-family: var(--font-head);
+      font-size: 1.3rem;
+      margin-bottom: 1.5rem;
+      color: #0A1C3A;
+    }
+    
+    .contact-detail {
+      display: flex;
+      align-items: flex-start;
+      gap: 1rem;
+      margin-bottom: 1.25rem;
+    }
+    
+    .contact-icon {
+      width: 40px;
+      height: 40px;
+      background: rgba(10, 28, 58, 0.15);
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.2rem;
+    }
+    
+    .contact-text {
+      flex: 1;
+    }
+    
+    .contact-text strong {
+      display: block;
+      font-size: 0.85rem;
+      color: #6c757d;
+      margin-bottom: 0.25rem;
+    }
+    
+    .contact-text p, .contact-text a {
+      color: #333;
+      text-decoration: none;
+      font-size: 1rem;
+    }
+    
+    .contact-text a:hover {
+      color: #E67E22;
+    }
+    
+    .map-container {
+      background: white;
+      border-radius: var(--radius);
+      overflow: hidden;
+      border: 1px solid #e0e0e0;
+      height: 400px;
+      position: relative;
+    }
+    
+    .map-container iframe {
+      width: 100%;
+      height: 100%;
+      border: 0;
+    }
+    
+    /* GPS Directions Button */
+    .gps-btn {
+      position: absolute;
+      bottom: 20px;
+      right: 20px;
+      z-index: 10;
+      background: #E67E22;
+      color: white;
+      border: none;
+      border-radius: 50px;
+      padding: 12px 20px;
+      font-size: 0.85rem;
+      font-weight: 700;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.25);
+      transition: all 0.3s ease;
+    }
+    
+    .gps-btn:hover {
+      background: #C0392B;
+      transform: scale(1.02);
+    }
+    
+    .gps-btn i {
+      font-size: 1rem;
+    }
+    
+    .gps-status {
+      position: absolute;
+      bottom: 20px;
+      left: 20px;
+      z-index: 10;
+      background: rgba(0,0,0,0.8);
+      color: white;
+      border-radius: 30px;
+      padding: 8px 16px;
+      font-size: 0.75rem;
+      display: none;
+      align-items: center;
+      gap: 8px;
+      backdrop-filter: blur(4px);
+    }
+    
+    .gps-status.show {
+      display: flex;
+    }
+    
+    .office-hours {
+      background: linear-gradient(135deg, rgba(10,28,58,0.1), rgba(230,126,34,0.1));
+      border-radius: var(--radius);
+      padding: 1.5rem;
+      margin-top: 2rem;
+      border: 1px solid rgba(10,28,58,0.3);
+    }
+    
+    .office-hours h4 {
+      font-family: var(--font-head);
+      margin-bottom: 1rem;
+      color: #0A1C3A;
+    }
+    
+    .hours-row {
+      display: flex;
+      justify-content: space-between;
+      padding: 0.5rem 0;
+      border-bottom: 1px solid #e0e0e0;
+    }
+    
+    .hours-row:last-child {
+      border-bottom: none;
+    }
+    
+    .team-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 1.5rem;
+      margin-top: 2rem;
+    }
+    
+    .team-card {
+      background: white;
+      border-radius: var(--radius);
+      padding: 1.5rem;
+      text-align: center;
+      border: 1px solid #e0e0e0;
+      transition: all 0.3s ease;
+    }
+    
+    .team-card:hover {
+      transform: translateY(-5px);
+      border-color: #E67E22;
+    }
+    
+    .team-name {
+      font-family: var(--font-head);
+      font-weight: 700;
+      font-size: 1.1rem;
+      margin-bottom: 0.25rem;
+      color: #0A1C3A;
+    }
+    
+    .team-role {
+      font-size: 0.8rem;
+      color: #E67E22;
+      margin-bottom: 0.5rem;
+      font-weight: 600;
+    }
+    
+    .team-email {
+      font-size: 0.75rem;
+      color: #6c757d;
+      word-break: break-all;
+    }
+    
+    .back-to-home {
+      margin-top: 2rem;
+      text-align: center;
+    }
+    
+    @media (max-width: 768px) {
+      .contact-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+
+<nav class="top-nav">
+  <div class="nav-logo"><div class="logo-icon">CC</div>Campus Connect</div>
+  <ul class="nav-links" id="navLinks">
+    <li><a href="index.html">Home</a></li>
+    <li><a href="accommodation.html">Stay</a></li>
+    <li><a href="tutoring.html">Study</a></li>
+    <li><a href="internships.html">Careers</a></li>
+    <li><a href="find-us.html" class="active">Find Us</a></li>
+  </ul>
+  <button class="hamburger" id="ham"><span></span><span></span><span></span></button>
+</nav>
+
+<div class="page-header">
+  <div style="padding: calc(var(--nav-h) + 2.5rem) clamp(1.25rem,5vw,4rem) 0; max-width:1200px; margin:0 auto;">
+    <div class="page-label">📍 Find Us</div>
+    <h1>Get in Touch</h1>
+    <p>We're here to help! Visit our office, give us a call, or send us an email. Our team is ready to assist you with any questions about our services.</p>
+  </div>
+</div>
+
+<div class="section">
+  <div class="contact-grid">
+    <div class="contact-info-card">
+      <h3>Contact Information</h3>
+      
+      <div class="contact-detail">
+        <div class="contact-icon">📍</div>
+        <div class="contact-text">
+          <strong>Office Address</strong>
+          <p>Campus Connect Hub<br>Sol Plaatje University<br>24-26 Scanlan St, New Park, Kimberley<br>8301, South Africa</p>
+        </div>
+      </div>
+      
+      <div class="contact-detail">
+        <div class="contact-icon">📞</div>
+        <div class="contact-text">
+          <strong>Phone</strong>
+          <p>+27 53 491 0000</p>
+          <p style="font-size: 0.8rem; color: #6c757d;">Mon-Fri, 8am-4pm</p>
+        </div>
+      </div>
+      
+      <div class="contact-detail">
+        <div class="contact-icon">✉️</div>
+        <div class="contact-text">
+          <strong>Email</strong>
+          <p><a href="mailto:campusconnect996@gmail.com">campusconnect996@gmail.com</a></p>
+        </div>
+      </div>
+      
+      <div class="contact-detail">
+        <div class="contact-icon">🌐</div>
+        <div class="contact-text">
+          <strong>Social Media</strong>
+          <div style="display: flex; gap: 1rem; margin-top: 0.5rem;">
+            <a href="https://x.com/campusconnect99?s=11" target="_blank" rel="noopener noreferrer" style="color: #333; text-decoration: none; display: inline-flex; align-items: center; gap: 4px;">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
+              </svg>
+              X
+            </a>
+            <a href="https://www.facebook.com/profile.php?id=61574502489918" target="_blank" rel="noopener noreferrer" style="color: #333; text-decoration: none; display: inline-flex; align-items: center; gap: 4px;">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                <path d="M24 12.073C24 5.405 18.627 0 12 0S0 5.405 0 12.073c0 6.027 4.388 11.022 10.125 11.927V15.56H7.078v-3.487h3.047V9.413c0-3.02 1.792-4.688 4.533-4.688 1.313 0 2.686.235 2.686.235v2.966H15.83c-1.491 0-1.956.93-1.956 1.887v2.26h3.328l-.532 3.487h-2.796v8.44C19.612 23.095 24 18.1 24 12.073z"/>
+              </svg>
+              Facebook
+            </a>
+            <a href="https://www.tiktok.com/@user6786502261835" target="_blank" rel="noopener noreferrer" style="color: #333; text-decoration: none; display: inline-flex; align-items: center; gap: 4px;">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                <path d="M19.589 6.686a4.93 4.93 0 0 1-3.77-1.365 4.92 4.92 0 0 1-1.445-3.321h-3.11l-.004 13.874a2.978 2.978 0 0 1-2.971 2.66 2.978 2.978 0 0 1-2.971-2.66 2.978 2.978 0 0 1 2.971-2.66c.413 0 .805.085 1.164.238v-3.125a6.099 6.099 0 0 0-1.164-.102A6.113 6.113 0 0 0 4.0 15.334a6.113 6.113 0 0 0 5.041 6.012c.385.058.775.088 1.164.088a6.113 6.113 0 0 0 5.041-6.012V9.996c.943.691 2.079 1.103 3.343 1.103v-3.12c-.451 0-.888-.09-1.306-.266l-.009-.007z"/>
+              </svg>
+              TikTok
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Map Container with GPS Directions to CORRECT Address -->
+    <div class="map-container">
+      <!-- Static map showing the area -->
+      <iframe id="campusMap" 
+        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3482.456926149166!2d24.74854131508408!3d-28.72828828238868!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x1eaa8fbe44a463b5%3A0x85c26a1a0dd1d8b6!2sSol%20Plaatje%20University!5e0!3m2!1sen!2sza!4v1700000000000!5m2!1sen!2sza" 
+        allowfullscreen="" 
+        loading="lazy"
+        referrerpolicy="no-referrer-when-downgrade">
+      </iframe>
+      
+      <!-- GPS Directions Button - NOW USING YOUR CORRECT ADDRESS -->
+      <button class="gps-btn" id="gpsDirectionsBtn">
+        <i class="fas fa-location-arrow"></i> Get Directions to 24-26 Scanlan St, Kimberley
+      </button>
+      
+      <!-- Status Message -->
+      <div class="gps-status" id="gpsStatus">
+        <i class="fas fa-spinner fa-spin"></i> Locating you...
+      </div>
+    </div>
+  </div>
+  
+  <div class="office-hours">
+    <h4>Office Hours</h4>
+    <div class="hours-row">
+      <span>Monday - Friday</span>
+      <span>08:00 - 16:00</span>
+    </div>
+    <div class="hours-row">
+      <span>Saturday</span>
+      <span>09:00 - 12:00</span>
+    </div>
+    <div class="hours-row">
+      <span>Sunday & Public Holidays</span>
+      <span>Closed</span>
+    </div>
+  </div>
+  
+  <h2 class="section-title" style="margin-top: 2rem;">Meet Our Team</h2>
+  <div class="team-grid">
+    <div class="team-card">
+      <div class="team-name">Buhle Faith Tshabalala</div>
+      <div class="team-role">Student Services Manager</div>
+      <div class="team-email">202604870@spu.ac.za</div>
+    </div>
+    <div class="team-card">
+      <div class="team-name">Tsholofelo Ntsoane</div>
+      <div class="team-role">Student Support Officer</div>
+      <div class="team-email">202608466@spu.ac.za</div>
+    </div>
+    <div class="team-card">
+      <div class="team-name">Kwanda Mhlongo</div>
+      <div class="team-role">Student Engagement Coordinator</div>
+      <div class="team-email">202660221@spu.ac.za</div>
+    </div>
+    <div class="team-card">
+      <div class="team-name">Junior Mudau</div>
+      <div class="team-role">Accommodation Coordinator</div>
+      <div class="team-email">202657360@spu.ac.za</div>
+    </div>
+    <div class="team-card">
+      <div class="team-name">Divine Ambrose</div>
+      <div class="team-role">Accommodation Assistant</div>
+      <div class="team-email">202660234@spu.ac.za</div>
+    </div>
+    <div class="team-card">
+      <div class="team-name">Katlego Mosehla</div>
+      <div class="team-role">Academic Support Lead</div>
+      <div class="team-email">202600497@spu.ac.za</div>
+    </div>
+    <div class="team-card">
+      <div class="team-name">Thabiso Mothobi</div>
+      <div class="team-role">Academic Support Tutor</div>
+      <div class="team-email">202606118@spu.ac.za</div>
+    </div>
+    <div class="team-card">
+      <div class="team-name">Feziwe Qumza</div>
+      <div class="team-role">Career Development Advisor</div>
+      <div class="team-email">202608837@spu.ac.za</div>
+    </div>
+    <div class="team-card">
+      <div class="team-name">Sbonezinhle Dube</div>
+      <div class="team-role">Career Development Advisor</div>
+      <div class="team-email">202607377@spu.ac.za</div>
+    </div>
+  </div>
+  
+  <div class="back-to-home">
+    <a href="index.html" class="btn">← Back to Home</a>
+  </div>
+</div>
+
+<script>
+  document.getElementById('ham').addEventListener('click', () => {
+    document.getElementById('navLinks').classList.toggle('open');
+  });
+
+  // GPS DIRECTIONS FUNCTIONALITY
+  // *** YOUR CORRECT DESTINATION: 24-26 Scanlan St, New Park, Kimberley, 8301 ***
+  const DESTINATION_ADDRESS = "24-26 Scanlan St, New Park, Kimberley, 8301";
+  
+  const gpsBtn = document.getElementById('gpsDirectionsBtn');
+  const gpsStatus = document.getElementById('gpsStatus');
+  
+  gpsBtn.addEventListener('click', () => {
+    // Check if browser supports geolocation
+    if (!navigator.geolocation) {
+      alert('Your browser does not support GPS. Opening Google Maps with the campus address instead.');
+      window.open(`https://www.google.com/maps/dir//${encodeURIComponent(DESTINATION_ADDRESS)}/`, '_blank');
+      return;
+    }
+    
+    // Show status
+    gpsStatus.classList.add('show');
+    gpsStatus.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Getting your location...';
+    
+    // Get user's current location
+    navigator.geolocation.getCurrentPosition(
+      // Success - location found
+      (position) => {
+        const userLat = position.coords.latitude;
+        const userLng = position.coords.longitude;
+        
+        // Update status
+        gpsStatus.innerHTML = '<i class="fas fa-check-circle"></i> Location found! Opening directions...';
+        
+        // Open Google Maps with directions from user location to YOUR EXACT ADDRESS
+        const googleMapsUrl = `https://www.google.com/maps/dir/${userLat},${userLng}/${encodeURIComponent(DESTINATION_ADDRESS)}/`;
+        window.open(googleMapsUrl, '_blank');
+        
+        // Hide status after 2 seconds
+        setTimeout(() => {
+          gpsStatus.classList.remove('show');
+        }, 2000);
+      },
+      // Error - location denied or unavailable
+      (error) => {
+        let errorMsg = '';
+        switch(error.code) {
+          case error.PERMISSION_DENIED:
+            errorMsg = 'Location access denied. Please enable GPS in your browser settings.';
+            break;
+          case error.POSITION_UNAVAILABLE:
+            errorMsg = 'Could not find your location. Check your GPS signal.';
+            break;
+          case error.TIMEOUT:
+            errorMsg = 'Location request timed out. Please try again.';
+            break;
+          default:
+            errorMsg = 'Unable to get your location.';
+        }
+        
+        gpsStatus.innerHTML = `<i class="fas fa-exclamation-triangle"></i> ${errorMsg}`;
+        gpsStatus.style.background = 'rgba(220, 53, 69, 0.9)';
+        
+        // After 3 seconds, offer fallback
+        setTimeout(() => {
+          gpsStatus.classList.remove('show');
+          gpsStatus.style.background = 'rgba(0,0,0,0.8)';
+          
+          const useFallback = confirm('Unable to access your location. Open Google Maps to 24-26 Scanlan St, Kimberley anyway?');
+          if (useFallback) {
+            window.open(`https://www.google.com/maps/dir//${encodeURIComponent(DESTINATION_ADDRESS)}/`, '_blank');
+          }
+        }, 3500);
+      },
+      {
+        enableHighAccuracy: true,
+        timeout: 10000,
+        maximumAge: 0
+      }
+    );
+  });
+</script>
+</body>
+</html>

@@ -1,0 +1,343 @@
+<!-- tutoring.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Tutoring services and free study materials for SPU students - academic support and resources" />
+  <title>Tutoring & Study – Campus Connect</title>
+  <link rel="stylesheet" href="shared.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+  <style>
+    body { background: #f9f9f9; }
+    .quick-topics { display: flex; flex-wrap: wrap; gap: 0.75rem; margin-bottom: 2rem; }
+    .topic-btn { 
+      background: white; 
+      border: 2px solid #e0e0e0; 
+      border-radius: 999px; 
+      padding: 0.5rem 1.25rem; 
+      font-size: 0.85rem; 
+      font-weight: 700; 
+      color: #6c757d; 
+      cursor: pointer; 
+      transition: all 0.2s ease; 
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    .topic-btn i {
+      font-size: 0.9rem;
+      color: #E67E22;
+    }
+    /* Hover and Active state - Dark Blue like header (#0A1C3A) */
+    .topic-btn:hover, .topic-btn.active { 
+      background: #0A1C3A;
+      border-color: #0A1C3A;
+      color: #fff; 
+    }
+    .topic-btn:hover i, .topic-btn.active i {
+      color: #fff;
+    }
+    
+    /* Book Card - Flex column layout with button at bottom */
+    .book-card { 
+      background: white; 
+      border: 1px solid #e0e0e0; 
+      border-radius: var(--radius); 
+      display: flex; 
+      flex-direction: column;
+      gap: 1rem; 
+      padding: 1.25rem; 
+      transition: all 0.3s ease; 
+      color: #333;
+      height: 100%;
+    }
+    .book-card:hover { 
+      transform: translateY(-5px); 
+      box-shadow: var(--shadow); 
+      border-color: #E67E22; 
+    }
+    .book-content {
+      flex: 1;
+      display: flex;
+      gap: 1rem;
+    }
+    .book-cover { 
+      width: 80px; 
+      height: 100px; 
+      border-radius: 8px; 
+      flex-shrink: 0; 
+      background: #f0f0f0; 
+      overflow: hidden; 
+    }
+    .book-cover img { 
+      width: 100%; 
+      height: 100%; 
+      object-fit: cover; 
+    }
+    .book-info {
+      flex: 1;
+      min-width: 0;
+    }
+    .book-title { 
+      font-family: var(--font-head); 
+      font-weight: 700; 
+      font-size: 0.95rem; 
+      margin-bottom: 0.25rem; 
+      color: #0A1C3A; 
+    }
+    .book-author { 
+      font-size: 0.8rem; 
+      color: #6c757d; 
+      margin-bottom: 0.5rem; 
+    }
+    .book-subjects { 
+      display: flex; 
+      flex-wrap: wrap; 
+      gap: 0.5rem; 
+      margin-bottom: 0.75rem; 
+    }
+    .book-button {
+      margin-top: auto;
+      width: 100%;
+    }
+    .results-info { 
+      font-size: 0.85rem; 
+      color: #6c757d; 
+      margin-bottom: 1rem; 
+    }
+    .error-box { 
+      background: #fff3cd; 
+      border: 1px solid #ffc107; 
+      border-radius: var(--radius); 
+      padding: 1.25rem; 
+      color: #856404; 
+      font-size: 0.9rem; 
+    }
+    
+    /* Section header styles */
+    .section-header-icon {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      font-size: 0.75rem;
+      font-weight: 700;
+      color: #64748B;
+      width: 100%;
+      margin-top: 0.5rem;
+      margin-bottom: 0.5rem;
+      padding-bottom: 0.3rem;
+      border-bottom: 2px solid rgba(230,126,34,0.3);
+    }
+    .section-header-icon i {
+      font-size: 0.9rem;
+      color: #E67E22;
+    }
+
+    /* Search button dark blue style */
+    .search-wrap .btn {
+      background: #0A1C3A;
+      box-shadow: 0 2px 8px rgba(10,28,58,0.3);
+    }
+    .search-wrap .btn:hover {
+      background: #0A1C3A;
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(10,28,58,0.4);
+    }
+    .search-wrap .btn::before {
+      background: rgba(230,126,34,0.3);
+    }
+
+    /* Read Free button - Dark Blue like header, full width at bottom */
+    .btn-sm {
+      background: #0A1C3A;
+      box-shadow: 0 2px 6px rgba(10,28,58,0.2);
+      display: flex;
+      justify-content: center;
+      width: 100%;
+    }
+    .btn-sm:hover {
+      background: #0A1C3A;
+      transform: translateY(-2px);
+      box-shadow: 0 4px 10px rgba(10,28,58,0.3);
+    }
+    .btn-sm::before {
+      background: rgba(230,126,34,0.3);
+    }
+  </style>
+</head>
+<body>
+
+<nav class="top-nav">
+  <div class="nav-logo"><div class="logo-icon">CC</div>Campus Connect</div>
+  <ul class="nav-links" id="navLinks">
+    <li><a href="index.html">Home</a></li>
+    <li><a href="accommodation.html">Stay</a></li>
+    <li><a href="tutoring.html" class="active">Study</a></li>
+    <li><a href="internships.html">Careers</a></li>
+    <li><a href="find-us.html">Find Us</a></li>
+  </ul>
+  <button class="hamburger" id="ham"><span></span><span></span><span></span></button>
+</nav>
+
+<div class="page-header">
+  <div style="padding: calc(var(--nav-h) + 2.5rem) clamp(1.25rem,5vw,4rem) 0; max-width:1200px; margin:0 auto;">
+    <div class="page-label">Academic Support</div>
+    <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:1rem;">
+      <h1 style="margin:0;">Study Materials</h1>
+      <a href="https://www.spu.ac.za/index.php/spu-library/" target="_blank" rel="noopener"
+         style="display:inline-flex;align-items:center;gap:0.65rem;background:linear-gradient(135deg,#E67E22,#F39C12);color:#fff;font-family:var(--font-head);font-weight:900;font-size:1.05rem;padding:0.85rem 2rem;border-radius:16px;text-decoration:none;letter-spacing:0.06em;box-shadow:0 6px 24px rgba(230,126,34,0.35);transition:all 0.25s;border:2px solid rgba(255,255,255,0.15);"
+         onmouseover="this.style.transform='translateY(-3px)';this.style.boxShadow='0 10px 32px rgba(230,126,34,0.5)'"
+         onmouseout="this.style.transform='translateY(0)';this.style.boxShadow='0 6px 24px rgba(230,126,34,0.35)'">
+          SPU LIBRARY <span style="font-size:1.1rem;">↗</span>
+      </a>
+    </div>
+    <p>Access thousands of free academic resources and enhance your learning experience.</p>
+  </div>
+</div>
+
+<div class="section">
+  <h2 class="section-title">More Free Academic Resources From The Open Library</h2>
+  <div class="search-wrap">
+    <input type="text" id="bookInput" placeholder="Search by title, subject, or author..." />
+    <button class="btn" onclick="searchBooks()">Search</button>
+  </div>
+
+  <div class="quick-topics">
+    <!-- Natural & Applied Sciences -->
+    <div class="section-header-icon">
+      <i class="fas fa-flask"></i> <span>Natural & Applied Sciences</span>
+    </div>
+    <button class="topic-btn active" onclick="quickSearch('computer science',this)"><i class="fas fa-laptop-code"></i> ICT & App Development</button>
+    <button class="topic-btn" onclick="quickSearch('data science',this)"><i class="fas fa-chart-line"></i> Data Science</button>
+    <button class="topic-btn" onclick="quickSearch('mathematics',this)"><i class="fas fa-calculator"></i> Mathematics</button>
+    <button class="topic-btn" onclick="quickSearch('biology',this)"><i class="fas fa-dna"></i> Biological Sciences</button>
+    <button class="topic-btn" onclick="quickSearch('chemistry physics',this)"><i class="fas fa-atom"></i> Physical Sciences</button>
+    <button class="topic-btn" onclick="quickSearch('environmental science',this)"><i class="fas fa-leaf"></i> Environmental Science</button>
+    <button class="topic-btn" onclick="quickSearch('agriculture',this)"><i class="fas fa-tractor"></i> Agriculture</button>
+
+    <!-- Economic & Management Sciences -->
+    <div class="section-header-icon">
+      <i class="fas fa-chart-pie"></i> <span>Economic & Management Sciences</span>
+    </div>
+    <button class="topic-btn" onclick="quickSearch('accounting',this)"><i class="fas fa-file-invoice-dollar"></i> Accounting</button>
+    <button class="topic-btn" onclick="quickSearch('economics',this)"><i class="fas fa-chart-simple"></i> Economics</button>
+    <button class="topic-btn" onclick="quickSearch('business management',this)"><i class="fas fa-briefcase"></i> Business & Management</button>
+    <button class="topic-btn" onclick="quickSearch('entrepreneurship',this)"><i class="fas fa-rocket"></i> Entrepreneurship</button>
+    <button class="topic-btn" onclick="quickSearch('retail management',this)"><i class="fas fa-store"></i> Retail Management</button>
+
+    <!-- Education -->
+    <div class="section-header-icon">
+      <i class="fas fa-graduation-cap"></i> <span>Education</span>
+    </div>
+    <button class="topic-btn" onclick="quickSearch('education teaching',this)"><i class="fas fa-chalkboard-user"></i> Teaching & Pedagogy</button>
+    <button class="topic-btn" onclick="quickSearch('curriculum studies',this)"><i class="fas fa-book-open"></i> Curriculum Studies</button>
+    <button class="topic-btn" onclick="quickSearch('school leadership management',this)"><i class="fas fa-building"></i> School Leadership</button>
+
+    <!-- Humanities -->
+    <div class="section-header-icon">
+      <i class="fas fa-landmark"></i> <span>Humanities</span>
+    </div>
+    <button class="topic-btn" onclick="quickSearch('history heritage',this)"><i class="fas fa-scroll"></i> History & Heritage</button>
+    <button class="topic-btn" onclick="quickSearch('linguistics language',this)"><i class="fas fa-language"></i> Languages & Interpreting</button>
+    <button class="topic-btn" onclick="quickSearch('geography sociology',this)"><i class="fas fa-globe-africa"></i> Geography & Sociology</button>
+  </div>
+
+  <div id="resultsInfo" class="results-info"></div>
+  <div id="booksGrid">
+    <div class="loader"><div class="spinner"></div><p>Loading academic resources...</p></div>
+  </div>
+</div>
+
+<script>
+  document.getElementById('ham').addEventListener('click', () => {
+    document.getElementById('navLinks').classList.toggle('open');
+  });
+
+  async function searchBooks(query) {
+    const q = query || document.getElementById('bookInput').value.trim() || 'computer science';
+    document.getElementById('booksGrid').innerHTML = '<div class="loader"><div class="spinner"></div><p>Searching Open Library...</p></div>';
+    document.getElementById('resultsInfo').textContent = '';
+
+    try {
+      const controller = new AbortController();
+      const timeout = setTimeout(() => controller.abort(), 10000);
+
+      const url = `https://openlibrary.org/search.json?q=${encodeURIComponent(q)}&limit=9&fields=key,title,author_name,subject,cover_i,first_publish_year,edition_count`;
+      const res = await fetch(url, { signal: controller.signal });
+      clearTimeout(timeout);
+
+      if (!res.ok) throw new Error(`HTTP ${res.status}`);
+
+      const data = await res.json();
+      const books = data.docs || [];
+
+      document.getElementById('resultsInfo').textContent =
+        `${(data.numFound || 0).toLocaleString()} results found for "${q}" — showing top ${books.length} resources`;
+
+      if (!books.length) {
+        document.getElementById('booksGrid').innerHTML =
+          '<div class="loader">No books found. Try a different search term.</div>';
+        return;
+      }
+
+      document.getElementById('booksGrid').innerHTML = `
+        <div class="grid-3">
+          ${books.map((b, i) => {
+            const coverUrl = b.cover_i
+              ? `https://covers.openlibrary.org/b/id/${b.cover_i}-M.jpg`
+              : 'https://placehold.co/80x100/1E293B/94A3B8?text=No+Cover';
+            const author = (b.author_name || ['Unknown'])[0];
+            const subjects = (b.subject || []).slice(0, 3);
+            return `
+              <div class="book-card fade-up d${(i % 6) + 1}">
+                <div class="book-content">
+                  <div class="book-cover">
+                    <img src="${coverUrl}" alt="${b.title}"
+                      onerror="this.src='https://placehold.co/80x100/1E293B/94A3B8?text=Book'">
+                  </div>
+                  <div class="book-info">
+                    <div class="book-title">${b.title}</div>
+                    <div class="book-author">by ${author}${b.first_publish_year ? ' · ' + b.first_publish_year : ''}</div>
+                    <div class="book-subjects">
+                      ${subjects.map(s => `<span class="tag tag-amber">${s.slice(0, 24)}</span>`).join('')}
+                    </div>
+                  </div>
+                </div>
+                <div class="book-button">
+                  <a href="https://openlibrary.org${b.key}" target="_blank" rel="noopener" class="btn btn-sm">Read Free →</a>
+                </div>
+              </div>
+            `;
+          }).join('')}
+        </div>
+      `;
+
+    } catch (err) {
+      if (err.name === 'AbortError') {
+        document.getElementById('booksGrid').innerHTML =
+          '<div class="error-box">⏱️ Request timed out. Open Library may be slow — please try again in a moment.</div>';
+      } else {
+        document.getElementById('booksGrid').innerHTML =
+          '<div class="error-box">⚠️ Could not connect to Open Library. Please check your internet connection and try again.</div>';
+      }
+      console.error('Open Library API error:', err);
+    }
+  }
+
+  function quickSearch(term, btn) {
+    document.querySelectorAll('.topic-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    document.getElementById('bookInput').value = term;
+    searchBooks(term);
+  }
+
+  document.addEventListener('DOMContentLoaded', () => {
+    searchBooks('computer science');
+    document.getElementById('bookInput')?.addEventListener('keydown', e => {
+      if (e.key === 'Enter') searchBooks();
+    });
+  });
+</script>
+</body>
+</html>

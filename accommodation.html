@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Student accommodation near Sol Plaatje University - NSFAS accredited and private housing options" />
+  <title>Accommodation – Campus Connect</title>
+  <link rel="stylesheet" href="shared.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+  <style>
+    body { background: #f9f9f9; }
+    .weather-widget {
+      background: #0A1C3A;
+      border-radius: var(--radius);
+      color: #fff;
+      padding: 1.75rem 2rem;
+      margin-bottom: 2.5rem;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 2rem;
+      box-shadow: 0 8px 32px rgba(10,28,58,0.3);
+    }
+    .ww-main { flex: 1; min-width: 180px; }
+    .ww-icon { font-size: 3rem; margin-bottom: 0.5rem; }
+    .ww-temp { font-family: var(--font-head); font-size: 3rem; font-weight: 800; line-height: 1; }
+    .ww-desc { font-size: 1rem; opacity: 0.85; text-transform: capitalize; margin-top: 0.25rem; }
+    .ww-loc { font-size: 0.8rem; opacity: 0.65; margin-top: 0.25rem; }
+    .ww-stats { display: flex; gap: 2rem; flex-wrap: wrap; }
+    .ww-stat .val { font-family: var(--font-head); font-size: 1.4rem; font-weight: 800; }
+    .ww-stat .lbl { font-size: 0.7rem; opacity: 0.65; }
+    .ww-advice { flex-basis: 100%; background: rgba(255,255,255,0.12); border-radius: 12px; padding: 0.75rem 1rem; font-size: 0.85rem; margin-top: 0.5rem; }
+    
+    /* Category Cards */
+    .category-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2rem;
+      margin-bottom: 2.5rem;
+    }
+    .category-card {
+      background: white;
+      border-radius: 24px;
+      padding: 1.5rem;
+      text-align: center;
+      transition: all 0.3s ease;
+      border: 2px solid #e2e8f0;
+      cursor: pointer;
+      text-decoration: none;
+      display: block;
+    }
+    .category-card:hover {
+      transform: translateY(-5px);
+      border-color: #E67E22;
+      box-shadow: var(--shadow);
+    }
+    .category-icon {
+      font-size: 3rem;
+      margin-bottom: 0.75rem;
+    }
+    .category-title {
+      font-size: 1.5rem;
+      font-weight: 800;
+      color: #0A1C3A;
+      margin-bottom: 0.5rem;
+    }
+    .category-count {
+      font-size: 0.85rem;
+      color: #E67E22;
+      font-weight: 600;
+    }
+    .category-desc {
+      font-size: 0.8rem;
+      color: #6c757d;
+      margin-top: 0.5rem;
+    }
+    
+    /* Accommodation Cards */
+    .accommodation-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      gap: 1.5rem;
+      margin-top: 1rem;
+    }
+    .accommodation-card {
+      background: white;
+      border-radius: 20px;
+      border: 1px solid #e2e8f0;
+      overflow: hidden;
+      transition: all 0.3s ease;
+    }
+    .accommodation-card:hover {
+      transform: translateY(-5px);
+      box-shadow: var(--shadow);
+      border-color: #E67E22;
+    }
+    .card-body {
+      padding: 1.25rem;
+    }
+    .card-title {
+      font-size: 1.1rem;
+      font-weight: 800;
+      color: #0A1C3A;
+      margin-bottom: 0.5rem;
+    }
+    .card-price {
+      font-size: 1rem;
+      font-weight: 700;
+      color: #E67E22;
+      margin-bottom: 0.5rem;
+    }
+    .card-distance {
+      font-size: 0.8rem;
+      color: #6c757d;
+      margin-bottom: 0.5rem;
+      display: flex;
+      align-items: center;
+      gap: 0.3rem;
+    }
+    .card-rating {
+      font-size: 0.8rem;
+      margin-bottom: 0.75rem;
+      color: #F59E0B;
+    }
+    .feature-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.4rem;
+      margin-bottom: 1rem;
+    }
+    .feature-tag {
+      background: #f1f5f9;
+      padding: 0.2rem 0.6rem;
+      border-radius: 20px;
+      font-size: 0.7rem;
+      color: #0A1C3A;
+    }
+    .card-button {
+      display: block;
+      background: #0A1C3A;
+      color: white;
+      text-align: center;
+      padding: 0.7rem;
+      border-radius: 12px;
+      font-weight: 600;
+      font-size: 0.85rem;
+      text-decoration: none;
+      transition: all 0.3s ease;
+    }
+    .card-button:hover {
+      background: #E67E22;
+      transform: translateY(-2px);
+    }
+    .section-title-large {
+      font-size: 1.6rem;
+      font-weight: 800;
+      color: #0A1C3A;
+      margin: 1.5rem 0 1rem;
+      border-left: 5px solid #E67E22;
+      padding-left: 1rem;
+    }
+    .back-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      margin-bottom: 1.5rem;
+      color: #E67E22;
+      text-decoration: none;
+      font-weight: 600;
+    }
+    .back-link:hover {
+      text-decoration: underline;
+    }
+    @media (max-width: 768px) {
+      .category-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+
+<nav class="top-nav">
+  <div class="nav-logo"><div class="logo-icon">CC</div>Campus Connect</div>
+  <ul class="nav-links" id="navLinks">
+    <li><a href="index.html">Home</a></li>
+    <li><a href="accommodation.html" class="active">Stay</a></li>
+    <li><a href="tutoring.html">Study</a></li>
+    <li><a href="internships.html">Careers</a></li>
+    <li><a href="find-us.html">Find Us</a></li>
+  </ul>
+  <button class="hamburger" id="ham"><span></span><span></span><span></span></button>
+</nav>
+
+<div class="page-header">
+  <div style="padding: calc(var(--nav-h) + 2.5rem) clamp(1.25rem,5vw,4rem) 0; max-width:1200px; margin:0 auto;">
+    <div class="page-label">Accommodation Services</div>
+    <h1>Student Housing</h1>
+    <p>Find safe, affordable housing near Sol Plaatje University. NSFAS-accredited and private options available.</p>
+  </div>
+</div>
+
+<div class="section">
+  <div id="weatherWidget"><div class="loader"><div class="spinner"></div><p>Fetching Kimberley weather...</p></div></div>
+
+  <!-- Two Category Cards - NSFAS Accredited & Non-NSFAS -->
+  <div class="category-grid">
+    <a href="#nsfas" class="category-card" onclick="document.getElementById('nsfas').scrollIntoView({behavior:'smooth'}); return false;">
+      <div class="category-icon">🏛️</div>
+      <div class="category-title">NSFAS Accredited</div>
+      <div class="category-count">4 Residences</div>
+      <div class="category-desc">Fully funded accommodation for eligible students</div>
+    </a>
+    <a href="#non-nsfas" class="category-card" onclick="document.getElementById('non-nsfas').scrollIntoView({behavior:'smooth'}); return false;">
+      <div class="category-icon">🏘️</div>
+      <div class="category-title">Non-NSFAS / Private</div>
+      <div class="category-count">4 Residences</div>
+      <div class="category-desc">Private housing options near campus</div>
+    </a>
+  </div>
+
+  <!-- NSFAS ACCREDITED SECTION -->
+  <div id="nsfas">
+    <h2 class="section-title-large">🏛️ NSFAS-Accredited Residences</h2>
+    <div class="accommodation-grid" id="nsfasGrid"></div>
+  </div>
+
+  <!-- NON-NSFAS / PRIVATE SECTION -->
+  <div id="non-nsfas">
+    <h2 class="section-title-large">🏘️ Private / Non-NSFAS Residences</h2>
+    <div class="accommodation-grid" id="privateGrid"></div>
+  </div>
+</div>
+
+<script>
+  document.getElementById('ham').addEventListener('click', () => {
+    document.getElementById('navLinks').classList.toggle('open');
+  });
+
+  // NSFAS Accredited Listings
+  const nsfasListings = [
+    {
+      name: "Moroka Hall (SPU Residence)",
+      price: "Covered by NSFAS",
+      distance: "±300m from campus (walking distance)",
+      rating: 4.4,
+      reviews: 99,
+      features: ["WiFi", "24/7 security", "Meals", "Laundry"],
+      website: "https://www.spu.ac.za/",
+      type: "nsfas"
+    },
+    {
+      name: "Mhudi Hall (SPU Residence)",
+      price: "Covered by NSFAS",
+      distance: "±400m from campus (walking distance)",
+      rating: 4.8,
+      reviews: 124,
+      features: ["WiFi", "Meals", "Laundry", "Security"],
+      website: "https://www.spu.ac.za/",
+      type: "nsfas"
+    },
+    {
+      name: "11 Hunt Student Accommodation",
+      price: "R2,500 – R3,500/month",
+      distance: "±1km from campus",
+      rating: 4.2,
+      reviews: 67,
+      features: ["WiFi", "Laundry", "Security", "No meals"],
+      website: "https://www.ezilet.com/",
+      type: "nsfas"
+    },
+    {
+      name: "13 Meyer Student Accommodation",
+      price: "R2,800 – R3,800/month",
+      distance: "±1.2km from campus",
+      rating: 4.3,
+      reviews: 52,
+      features: ["WiFi", "Laundry", "Security", "No meals"],
+      website: "https://www.ezilet.com/",
+      type: "nsfas"
+    }
+  ];
+
+  // Private / Non-NSFAS Listings
+  const privateListings = [
+    {
+      name: "Cullinan House",
+      price: "R3,000 – R4,000/month",
+      distance: "±700m from campus",
+      rating: 4.6,
+      reviews: 56,
+      features: ["WiFi", "Study spaces", "Laundry", "Security", "Self-catering"],
+      website: "https://cullinanhouse.co.za/",
+      type: "private"
+    },
+    {
+      name: "Longstreet Lofts",
+      price: "R3,800 – R4,500/month",
+      distance: "±1.5km from campus",
+      rating: 4.7,
+      reviews: 89,
+      features: ["WiFi", "Gym", "Cleaning", "Laundry", "Secure parking", "Self-catering"],
+      website: "https://www.fundi.co.za/student-life/student-accommodation/",
+      type: "private"
+    },
+    {
+      name: "Rise Student Living (Birbeck Units)",
+      price: "R3,800 – R4,500/month",
+      distance: "±1.5km from campus",
+      rating: 4.6,
+      reviews: 72,
+      features: ["WiFi", "Laundry", "Security", "Self-catering"],
+      website: "https://www.risestudentliving.com/UOBK/",
+      type: "private"
+    },
+    {
+      name: "Mount Curtis Student Accommodation",
+      price: "R3,500 – R4,500/month",
+      distance: "±1km from campus",
+      rating: 5.0,
+      reviews: 34,
+      features: ["WiFi", "Laundry", "Security", "Self-catering"],
+      website: "https://www.property24.com/",
+      type: "private"
+    }
+  ];
+
+  function starsHtml(rating) {
+    let full = Math.floor(rating);
+    let half = rating % 1 >= 0.5 ? 1 : 0;
+    let empty = 5 - full - half;
+    return '★'.repeat(full) + (half ? '½' : '') + '☆'.repeat(empty);
+  }
+
+  function renderListings(listings, containerId) {
+    const container = document.getElementById(containerId);
+    container.innerHTML = listings.map((listing, i) => `
+      <div class="accommodation-card fade-up d${(i % 6) + 1}">
+        <div class="card-body">
+          <div class="card-title">${listing.name}</div>
+          <div class="card-price">💰 ${listing.price}</div>
+          <div class="card-distance">📍 ${listing.distance}</div>
+          <div class="card-rating">${starsHtml(listing.rating)} ${listing.rating} (${listing.reviews} reviews)</div>
+          <div class="feature-list">
+            ${listing.features.map(f => `<span class="feature-tag">${f}</span>`).join('')}
+          </div>
+          <a href="${listing.website}" target="_blank" rel="noopener noreferrer" class="card-button">
+            Visit Website → 
+          </a>
+        </div>
+      </div>
+    `).join('');
+  }
+
+  async function loadWeather() {
+    try {
+      const res = await fetch('https://api.open-meteo.com/v1/forecast?latitude=-28.7282&longitude=24.7499&current=temperature_2m,relative_humidity_2m,wind_speed_10m,apparent_temperature,weather_code&timezone=Africa%2FJohannesburg');
+      if (!res.ok) throw new Error();
+      const data = await res.json();
+      const c = data.current;
+      const weatherCodes = { 0: ['☀️', 'Clear Sky'], 1: ['🌤️', 'Mainly Clear'], 2: ['⛅', 'Partly Cloudy'], 3: ['☁️', 'Overcast'], 45: ['🌫️', 'Foggy'], 51: ['🌦️', 'Light Drizzle'], 61: ['🌧️', 'Light Rain'], 63: ['🌧️', 'Moderate Rain'], 65: ['⛈️', 'Heavy Rain'], 80: ['🌦️', 'Showers'], 95: ['⛈️', 'Thunderstorm'] };
+      const [icon, desc] = weatherCodes[c.weather_code] || ['🌡️', 'Variable'];
+      const advice = c.temperature_2m > 28 ? 'Very hot today — consider accommodation with air conditioning.' : c.temperature_2m < 15 ? 'Cold weather — look for accommodation with heating.' : 'Comfortable conditions today — great time to inspect accommodation!';
+      document.getElementById('weatherWidget').innerHTML = `
+        <div class="weather-widget">
+          <div class="ww-main"><div class="ww-icon">${icon}</div><div class="ww-temp">${Math.round(c.temperature_2m)}°C</div><div class="ww-desc">${desc}</div><div class="ww-loc">📍 Kimberley, Northern Cape — Live Update</div></div>
+          <div class="ww-stats"><div class="ww-stat"><div class="val">${Math.round(c.apparent_temperature)}°C</div><div class="lbl">Feels Like</div></div><div class="ww-stat"><div class="val">${c.relative_humidity_2m}%</div><div class="lbl">Humidity</div></div><div class="ww-stat"><div class="val">${c.wind_speed_10m}</div><div class="lbl">km/h Wind</div></div></div>
+          <div class="ww-advice">💬 ${advice}</div>
+        </div>`;
+    } catch (err) {
+      document.getElementById('weatherWidget').innerHTML = `<div class="weather-widget"><div class="ww-main"><div class="ww-icon">🌡️</div><div class="ww-temp">—</div><div class="ww-desc">Weather data unavailable</div><div class="ww-loc">📍 Kimberley, Northern Cape</div></div></div>`;
+    }
+  }
+
+  document.addEventListener('DOMContentLoaded', () => {
+    loadWeather();
+    renderListings(nsfasListings, 'nsfasGrid');
+    renderListings(privateListings, 'privateGrid');
+  });
+</script>
+</body>
+</html>
